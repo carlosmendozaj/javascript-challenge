@@ -20,24 +20,33 @@ tableData.forEach((ufoSightings) => {
   Object.values(ufoSightings).forEach(value => row.append("td").text(value));
 });
 
-// Complete the event handler function for the form
+// Filter
 function runEnter() {
 
-    var htmlTable = d3.select("#ufo-table");
-    var tbody = d3.select("tbody")
-    tbody.html("");
-    // Select the input element and get the raw HTML node
-    var inputElement = d3.select("#datetime");
-    var datetimeSearchCriteria = inputElement.property("value")
+  d3.event.preventDefault();
     
-    var filterResults = tableData.filter(ufoSighting =>
-        ufoSighting.datetime === datetimeSearchCriteria
-        );
+  // Variables input
+  var inputVal = form.property("value");
 
-    filterResults.forEach((ufoSighting) => {
-    console.log(ufoSighting);
-    row = tbody.append("tr");
-    Object.values(ufoSighting).forEach(value => row.append("td").text(value));
+  // Use form to filter by date
+  var filteredData=  tableData.filter(ufoDate => ufoDate.datetime === inputVal);
+  console.log(filteredData);
+
+  // Clear tbody 
+  tbody.html("")
+
+  filteredData.forEach(UFOSightings => {
+
+  // Appennd able rows 
+   var row = tbody.append("tr");
+  Object.entries(UFOSightings).forEach(([key, value]) => {
+  
+  // Append for table data 
+  var cell = row.append("td");
+  
+  // Add values 
+  cell.text(value);
     })
 
-    }
+});
+};
