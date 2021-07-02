@@ -15,7 +15,7 @@ tableData.forEach((element) => {
 
 
 // Filter the button:
-var  button = d3.select("#filter-btn");
+var button = d3.select("#filter-btn");
 var form = d3.select("#reset-btn");
 
 // Forms:
@@ -33,10 +33,36 @@ cityForm.on("submit", runFilter);
 stateForm.on("submit", runFilter);
 countryForm.on("submit", runFilter);
 shapeForm.on("submit", runFilter);
-form.on("click", function(){
-    var new_row = tbody.append("tr");
-        Object.entries(item).forEach(([key, value]) => {
-            new_row.append("td").text(value);
-})
-});
+form.on("click", function() {
+    tableData.forEach((element) => {
+        var row = tbody.append("tr");
+        Object.entries(element).forEach(([key,value]) => {
+            row.append("td").text(value);
+        })
+    });;
+  }); 
 
+  function runFilter(){
+    d3.event.preventDefault();
+    var dateForm = dateFormIn.property("value"); 
+    var cityForm = cityFormIn.property("value"); 
+    var stateForm = stateFormIn.property("value"); 
+    var countryForm = countryFormIn.property("value"); 
+    var shapeForm = shapeFormIn.property("value");
+
+    var filteredData = tableData.filter(date => 
+        date.datetime === dateForm || 
+        date.datetime === datetimeForm &&
+        date.city === cityForm ||
+        date.state === stateForm ||
+        date.country === countryForm ||
+        date.shape === shapeForm) ||
+
+        filteredData.forEach(function(element) {
+            var row = tbody.append("tr");
+            Object.entries(element).forEach(([key,value]) => {
+                row.append("td").text(value);
+            })
+        })
+    
+        }
